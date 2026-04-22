@@ -198,6 +198,7 @@ footer {
     justify-content: start;
     align-items: stretch;
     gap: 8px;
+    font-size: 1rem;
 }
 .folder-controls > * {
     border: none;
@@ -210,6 +211,7 @@ footer {
     font-size: 1.1rem;
     scale: 1.0;
     transition: scale 0.075s ease-in-out;
+    text-align: center;
 }
 .folder-controls > *:hover {
     background-color: rgb(0,150,255);
@@ -221,6 +223,9 @@ footer {
 .btn-sharefolder {
     margin-left: auto;
     text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .folder-content {
     width: 100%;
@@ -247,13 +252,20 @@ footer {
     transition: outline 0.05s ease-out;
 }
 .folder-link {
-    flex: 1;
+    flex: 1 1 0;
     height: 100%;
     padding: 4px 0px 4px 8px;
     display: flex;
     align-items: center;
     gap: 8px;
     color: inherit;
+    min-width: 0;
+}
+.folder-link-name {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    flex: 1;
 }
 .folder-item:hover {
     outline: 2px solid rgb(0,150,255);
