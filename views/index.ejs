@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <%- include("partials/header") %>
+
+    <main>
+        <div class="index-content">
+            <div class="index-title">File Storage</div>
+            <% if (!locals.currentUser) { %>
+                <div class="index-info">Sign Up and Login to use</div>
+                <div class="index-links">
+                    <a class="index-link index-login" href="/login">Login</a>
+                    <a class="index-link index-signup" href="/signup">Sign Up</a>
+                </div>
+            <% } else { %>
+                <div class="index-info">View your files</div>
+                <div class="index-links">
+                    <a class="index-link index-signup" href="/folder">Files</a>
+                </div>
+            <% } %>
+        </div>
+    </main>
+
+    <%- include("partials/footer") %>
+</body>
+</html>

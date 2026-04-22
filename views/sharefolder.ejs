@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Folder</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <%- include("partials/header") %>
+
+    <main>
+        <%
+        const now = new Date();
+
+        const defaultDate = new Date();
+        defaultDate.setDate(now.getDate() + 7);
+
+        const maxDate = new Date();
+        maxDate.setDate(now.getDate() + 365);
+        %>
+
+        <form class="form-normal" action="/folder/<%=folder.id%>/share" method="post">
+            <div class="form-title">Share Folder</div>
+            <div class="form-info">All contents of folder <span class="form-info-folder"><%=folder.name%></span> will be shared.</div>
+            <label for="input-date" class="form-label">
+                Share until
+                <input type="datetime-local" name="date" id="input-date" 
+                    min="<%= toLocalDatetimeValue(now) %>"
+                    value="<%= (locals.body && body.date) ? body.date : toLocalDatetimeValue(defaultDate) %>"
+                    max="<%= toLocalDatetimeValue(maxDate) %>"
+                    required>
+            </label>
+            <%- include("partials/errors") %>
+            <% if (locals.link) { %>
+                <div class="share-link">
+                    <div class="share-link-info">Success! Use the link below.</div>
+                    <a target="_blank" href="<%= link %>" class="share-link-link"><%= link %></a>
+                </div>
+            <% } %>
+            <button type="submit">Share</button>
+        </form>
+    </main>
+
+    <%- include("partials/footer") %>
+</body>
+</html>

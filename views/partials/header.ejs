@@ -1,0 +1,27 @@
+<header>
+    <nav>
+        <% if (locals.currentUser) { %>
+            <a href="/folder" class="nav-title">File Storage</a>
+        <% } else { %>
+            <a href="/" class="nav-title">File Storage</a>
+        <% } %>
+        <% if (!locals.currentUser) { %>
+            <ul class="nav-auth">
+                <a href="/login" class="nav-login">Login</a>
+                <a href="/signup" class="nav-signup">Sign Up</a>
+            </ul>
+        <% } else { %>
+            <div class="nav-user">
+                <div class="nav-username"><%= currentUser.username %></div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
+                    <path d="M7 10L12 15L17 10" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="nav-user-dropdown">
+                    <form class="nav-user-dropdown-form" action="/logout" method="post">
+                        <button type="submit">Logout</button>
+                    </form>
+                </div>
+            </div>
+        <% } %>
+    </nav>
+</header>

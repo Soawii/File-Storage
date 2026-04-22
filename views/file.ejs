@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <%- include("partials/header") %>
+
+    <main>
+        <div class="file-content">
+            <div class="file-name"><%=file.name%></div>
+            <div class="file-size">Size: <%=file.size%> bytes</div>
+            <div class="file-upload_time">Upload Date: <%= file.upload_time.toLocaleString() %></div>
+            <div class="file-buttons">
+                <a class="file-buttons-download" href="/download/<%=file.id%>" download="<%=file.name%>">Download</a>
+                <% if (!locals.share) { %>
+                    <form class="form-file-buttons-delete" action="/file/<%=file.id%>/delete" method="post">
+                        <button class="file-buttons-delete">Delete</button>
+                    </form>
+                <% } %>
+            </div>
+        </div>      
+    </main>
+
+    <%- include("partials/footer") %>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <%- include("partials/header") %>
+
+    <main>
+        <div class="folder">
+            <div class="folder-title"># <%= folder.name %></div>
+            <% if (!locals.share) { %>
+                <div class="folder-controls">
+                    <button class="btn-newfile" type="button">New files</button>
+                    <button class="btn-newfolder" type="button">New folder</button>
+                    <a href="/folder/<%=folder.id%>/share" class="btn-sharefolder" type="button">Share folder</a>
+                </div>
+            <% } %>
+            <div class="folder-content">
+                <% if (folder.parentId !== null) { %>
+                    <div class="folder-item">
+                        <a href="<%=locals.share ? `/share` : ``%>/folder/<%=folder.parentId%>" class="folder-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="rgb(253, 207, 9)">
+                                <path d="M3 8.2C3 7.07989 3 6.51984 3.21799 6.09202C3.40973 5.71569 3.71569 5.40973 4.09202 5.21799C4.51984 5 5.0799 5 6.2 5H9.67452C10.1637 5 10.4083 5 10.6385 5.05526C10.8425 5.10425 11.0376 5.18506 11.2166 5.29472C11.4184 5.4184 11.5914 5.59135 11.9373 5.93726L12.0627 6.06274C12.4086 6.40865 12.5816 6.5816 12.7834 6.70528C12.9624 6.81494 13.1575 6.89575 13.3615 6.94474C13.5917 7 13.8363 7 14.3255 7H17.8C18.9201 7 19.4802 7 19.908 7.21799C20.2843 7.40973 20.5903 7.71569 20.782 8.09202C21 8.51984 21 9.0799 21 10.2V15.8C21 16.9201 21 17.4802 20.782 17.908C20.5903 18.2843 20.2843 18.5903 19.908 18.782C19.4802 19 18.9201 19 17.8 19H6.2C5.07989 19 4.51984 19 4.09202 18.782C3.71569 18.5903 3.40973 18.2843 3.21799 17.908C3 17.4802 3 16.9201 3 15.8V8.2Z" stroke="rgb(249, 180, 64)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            ..
+                        </a>
+                    </div>
+                <% } %>
+
+                <% for (const child of folder.children) { %>
+                    <div class="folder-item">
+                        <a class="folder-link" href="<%=locals.share ? `/share` : ``%>/folder/<%=child.id%>">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="rgb(253, 207, 9)">
+                                <path d="M3 8.2C3 7.07989 3 6.51984 3.21799 6.09202C3.40973 5.71569 3.71569 5.40973 4.09202 5.21799C4.51984 5 5.0799 5 6.2 5H9.67452C10.1637 5 10.4083 5 10.6385 5.05526C10.8425 5.10425 11.0376 5.18506 11.2166 5.29472C11.4184 5.4184 11.5914 5.59135 11.9373 5.93726L12.0627 6.06274C12.4086 6.40865 12.5816 6.5816 12.7834 6.70528C12.9624 6.81494 13.1575 6.89575 13.3615 6.94474C13.5917 7 13.8363 7 14.3255 7H17.8C18.9201 7 19.4802 7 19.908 7.21799C20.2843 7.40973 20.5903 7.71569 20.782 8.09202C21 8.51984 21 9.0799 21 10.2V15.8C21 16.9201 21 17.4802 20.782 17.908C20.5903 18.2843 20.2843 18.5903 19.908 18.782C19.4802 19 18.9201 19 17.8 19H6.2C5.07989 19 4.51984 19 4.09202 18.782C3.71569 18.5903 3.40973 18.2843 3.21799 17.908C3 17.4802 3 16.9201 3 15.8V8.2Z" stroke="rgb(249, 180, 64)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <%=child.name%>
+                        </a>
+                        <% if (!locals.share) { %>
+                            <div class="folder-item-control">
+                                <a href="/folder/<%=child.id%>/update" class="item-edit-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
+                                        <path d="M21.2799 6.40005L11.7399 15.94C10.7899 16.89 7.96987 17.33 7.33987 16.7C6.70987 16.07 7.13987 13.25 8.08987 12.3L17.6399 2.75002C17.8754 2.49308 18.1605 2.28654 18.4781 2.14284C18.7956 1.99914 19.139 1.92124 19.4875 1.9139C19.8359 1.90657 20.1823 1.96991 20.5056 2.10012C20.8289 2.23033 21.1225 2.42473 21.3686 2.67153C21.6147 2.91833 21.8083 3.21243 21.9376 3.53609C22.0669 3.85976 22.1294 4.20626 22.1211 4.55471C22.1128 4.90316 22.0339 5.24635 21.8894 5.5635C21.7448 5.88065 21.5375 6.16524 21.2799 6.40005V6.40005Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M11 4H6C4.93913 4 3.92178 4.42142 3.17163 5.17157C2.42149 5.92172 2 6.93913 2 8V18C2 19.0609 2.42149 20.0783 3.17163 20.8284C3.92178 21.5786 4.93913 22 6 22H17C19.21 22 20 20.2 20 18V13" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                                <form class="form-item-delete-button" action="/folder/<%=child.id%>/delete" method="post">
+                                    <button class="item-delete-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
+                                            <path d="M18 6L17.1991 18.0129C17.129 19.065 17.0939 19.5911 16.8667 19.99C16.6666 20.3412 16.3648 20.6235 16.0011 20.7998C15.588 21 15.0607 21 14.0062 21H9.99377C8.93927 21 8.41202 21 7.99889 20.7998C7.63517 20.6235 7.33339 20.3412 7.13332 19.99C6.90607 19.5911 6.871 19.065 6.80086 18.0129L6 6M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6M14 10V17M10 10V17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+                        <% } %>
+                    </div>
+                <% } %>
+
+                <% for (const file of folder.files) { %>
+                    <div class="folder-item">
+                        <a href="<%=locals.share ? `/share` : ``%>/file/<%=file.id%>" class="folder-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
+                                <path d="M19 9V17.8C19 18.9201 19 19.4802 18.782 19.908C18.5903 20.2843 18.2843 20.5903 17.908 20.782C17.4802 21 16.9201 21 15.8 21H8.2C7.07989 21 6.51984 21 6.09202 20.782C5.71569 20.5903 5.40973 20.2843 5.21799 19.908C5 19.4802 5 18.9201 5 17.8V6.2C5 5.07989 5 4.51984 5.21799 4.09202C5.40973 3.71569 5.71569 3.40973 6.09202 3.21799C6.51984 3 7.0799 3 8.2 3H13M19 9L13 3M19 9H14C13.4477 9 13 8.55228 13 8V3" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <%=file.name%>
+                        </a>
+                        <% if (!locals.share) { %>
+                            <div class="folder-item-control">
+                                <a href="/file/<%=file.id%>/update" class="item-edit-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
+                                        <path d="M21.2799 6.40005L11.7399 15.94C10.7899 16.89 7.96987 17.33 7.33987 16.7C6.70987 16.07 7.13987 13.25 8.08987 12.3L17.6399 2.75002C17.8754 2.49308 18.1605 2.28654 18.4781 2.14284C18.7956 1.99914 19.139 1.92124 19.4875 1.9139C19.8359 1.90657 20.1823 1.96991 20.5056 2.10012C20.8289 2.23033 21.1225 2.42473 21.3686 2.67153C21.6147 2.91833 21.8083 3.21243 21.9376 3.53609C22.0669 3.85976 22.1294 4.20626 22.1211 4.55471C22.1128 4.90316 22.0339 5.24635 21.8894 5.5635C21.7448 5.88065 21.5375 6.16524 21.2799 6.40005V6.40005Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M11 4H6C4.93913 4 3.92178 4.42142 3.17163 5.17157C2.42149 5.92172 2 6.93913 2 8V18C2 19.0609 2.42149 20.0783 3.17163 20.8284C3.92178 21.5786 4.93913 22 6 22H17C19.21 22 20 20.2 20 18V13" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                                <form class="form-item-delete-button" action="/file/<%=file.id%>/delete" method="post">
+                                    <button class="item-delete-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
+                                            <path d="M18 6L17.1991 18.0129C17.129 19.065 17.0939 19.5911 16.8667 19.99C16.6666 20.3412 16.3648 20.6235 16.0011 20.7998C15.588 21 15.0607 21 14.0062 21H9.99377C8.93927 21 8.41202 21 7.99889 20.7998C7.63517 20.6235 7.33339 20.3412 7.13332 19.99C6.90607 19.5911 6.871 19.065 6.80086 18.0129L6 6M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6M14 10V17M10 10V17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+                        <% } %>
+                    </div>
+                <% } %>
+
+            </div>
+        </div>
+    </main>
+
+    <%- include("partials/footer") %>
+
+    <% if (!locals.share) { %>
+        <div class="modals">
+            <div class="modal-backdrop"></div>
+            
+            <form method="post" action="/folder/<%=folder.id%>/newfile" class="modal" id="modal-newfile" enctype="multipart/form-data">
+                <div class="modal-title" id="modal-newfile-title">New file-size</div>
+                <label for="input-newfile-file">
+                    <div class="input-file-info-array">
+                        <div class="input-file-info">
+                            <div class="input-file-info-title">No files chosen</div>
+                            <div class="input-file-info-size"></div>
+                        </div>
+                    </div>
+                    <div class="input-file-errors"></div>
+                    <div class="input-file-button">Upload Files</div>
+                    <input type="file" name="file" id="input-newfile-file" required multiple>
+                </label>
+                <button type="submit" class="modal-ok" id="modal-newfile-ok">
+                    <div class="submit-title">Add files</div> 
+                    <div class="loader"></div>
+                </button>
+            </form>
+
+            <form method="post" action="/folder/<%=folder.id%>/newfolder" class="modal" id="modal-newfolder">
+                <div class="modal-title" id="modal-newfolder-title">New Folder</div>
+                <label for="input-newfolder-name">
+                    Name
+                    <input type="text" name="name" id="input-newfolder-name"> 
+                </label>
+                <button type="submit" class="modal-ok" id="modal-newfolder-ok">
+                    <div class="submit-title">Add folder</div> 
+                    <div class="loader"></div>
+                </button>
+            </form>
+        </div>
+        <script>
+            let open_modal = null;
+
+            function openModal(modal) {
+                if (open_modal === null) {
+                    open_modal = modal;
+                    open_modal.setAttribute("open", "");
+                }
+            }
+            function closeModal() {
+                if (open_modal !== null) {
+                    open_modal.removeAttribute("open");
+                    open_modal = null;
+                }
+            }
+
+            function returnFileSize(number) {
+                if (number < 1e3) {
+                    return `${number} bytes`;
+                } else if (number >= 1e3 && number < 1e6) {
+                    return `${(number / 1e3).toFixed(1)} KB`;
+                }
+                return `${(number / 1e6).toFixed(1)} MB`;
+            }
+
+            function main() {
+                const newfile = document.querySelector(".btn-newfile");
+                const newfolder = document.querySelector(".btn-newfolder");
+                const newfile_modal = document.getElementById("modal-newfile");
+                const newfile_modal_input = document.getElementById("input-newfile-file");
+                const newfolder_modal = document.getElementById("modal-newfolder");
+                const newfolder_modal_input = document.getElementById("input-newfolder-name");
+                const modal_backdrop = document.querySelector(".modal-backdrop");
+
+                newfile.addEventListener("click", e => {
+                    if (open_modal === newfile_modal) {
+                        closeModal();
+                    }
+                    else if (open_modal === null) {
+                        openModal(newfile_modal);
+                        newfile_modal_input.focus();
+                    }
+                });
+                newfolder.addEventListener("click", e => {
+                    if (open_modal === newfolder_modal) {
+                        closeModal();
+                    }
+                    else if (open_modal === null) {
+                        openModal(newfolder_modal);
+                        newfolder_modal_input.focus();
+                    }
+                });
+                modal_backdrop.addEventListener("click", e => {
+                    closeModal();
+                });
+
+                const file_info_array = document.querySelector(".input-file-info-array");
+                const file_info = document.querySelector(".input-file-info");
+                const file_input = document.getElementById("input-newfile-file");
+                const file_errors = document.querySelector(".input-file-errors");
+                file_input.addEventListener("change", e => {
+                    while (file_info_array.firstChild) {
+                        file_info_array.removeChild(file_info_array.firstChild);
+                    }
+                    while (file_errors.firstChild) {
+                        file_errors.removeChild(file_errors.firstChild);
+                    }
+
+                    const files = e.target.files;
+                    const new_files = new DataTransfer();
+                    if (files.length == 0) {
+                        const info_clone = file_info.cloneNode(true);
+                        const file_title = info_clone.querySelector(".input-file-info-title");
+                        const file_size = info_clone.querySelector(".input-file-info-size");
+                        file_title.textContent = "No files selected";
+                        file_size.textContent = "";
+                        file_info_array.appendChild(info_clone);
+                    }
+                    else {
+                        for (let i = 0; i < files.length; i++) {
+                            if (files[i].size > 1024*1024*15) {
+                                if (!file_errors.firstChild) {
+                                    file_errors.appendChild(document.createTextNode("Files should be less than 50 MB in size"));
+                                }
+                                continue;
+                            }
+                            new_files.items.add(files[i]);
+                            const info_clone = file_info.cloneNode(true);
+                            const file_title = info_clone.querySelector(".input-file-info-title");
+                            const file_size = info_clone.querySelector(".input-file-info-size");
+                            file_title.textContent = files[i].name;
+                            file_size.textContent = returnFileSize(files[i].size);
+                            file_info_array.appendChild(info_clone);
+                        }
+                    }
+                    e.target.files = new_files.files;
+                });
+
+                const form_newfile = document.getElementById("modal-newfile");
+                form_newfile.addEventListener("submit", e => {
+                    if (form_newfile.hasAttribute("sent")) {
+                        e.preventDefault();
+                        return;
+                    }
+                    form_newfile.setAttribute("sent", "");
+                });
+
+                const form_newfolder = document.getElementById("modal-newfolder");
+                form_newfolder.addEventListener("submit", e => {
+                    if (form_newfolder.hasAttribute("sent")) {
+                        e.preventDefault();
+                        return;
+                    }
+                    form_newfolder.setAttribute("sent", "");
+                });
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                main();
+            });
+        </script>
+    <% } %>
+
+</body>
+</html>

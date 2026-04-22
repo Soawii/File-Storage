@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=title%></title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <%- include("partials/header") %>
+
+    <main>
+        <form class="form-normal" action="<%=action%>" method="post">
+            <div class="form-title"><%=title%></div>
+            <label for="input-name" class="form-label">
+                Name
+                <input type="text" name="name" id="input-name" value="<%= (locals.body && body.name) ? body.name : '' %>">
+            </label>
+            <%- include("partials/errors") %>
+            <button type="submit">Update</button>
+        </form>
+    </main>
+
+    <%- include("partials/footer") %>
+</body>
+</html>

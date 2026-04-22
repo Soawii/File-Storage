@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <%- include("partials/header") %>
+
+    <main>
+        <form class="form-normal" action="/signup" method="post">
+            <div class="form-title">Sign Up</div>
+            <label for="input-username" class="form-label">
+                Username
+                <input type="text" name="username" id="input-username" value="<%= (locals.body && body.username) ? body.username : '' %>" autofocus required minlength="4" maxlength="40">
+            </label>
+            <label for="input-password" class="form-label">
+                Password
+                <input type="password" name="password" id="input-password" value="<%= (locals.body && body.password) ? body.password : '' %>" required minlength="6" maxlength="100">
+            </label>
+            <%- include("partials/errors") %>
+            <button type="submit">
+                <div class="submit-title">Sign Up</div> 
+                <div class="loader"></div>
+            </button>
+        </form>
+    </main>
+
+    <%- include("partials/footer") %>
+</body>
+<script>
+    function main() {
+        const form = document.querySelector(".form-normal");
+        const button = document.querySelector(`.form-normal button[type="submit"]`);
+        form.addEventListener("submit", e => {
+            button.setAttribute("disabled", "");
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        main();
+    });
+</script>
+</html>
