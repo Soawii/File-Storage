@@ -782,8 +782,8 @@ export const download_file = [
                 return res.status(404).send("Not found");
             }
 
-            if (file.user_id !== req.user.id) {
-                let id = user.folderId;
+            if (!req.user || file.user_id !== req.user.id) {
+                let id = file.folderId;
                 let is_shared = false;
                 const now = new Date();
                 while (id) {
