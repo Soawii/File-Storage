@@ -7,7 +7,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "npx prisma migrate deploy && node index.js",
+    "build": "npm install && npx prisma generate",
+    "migrate": "npx prisma migrate deploy",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
