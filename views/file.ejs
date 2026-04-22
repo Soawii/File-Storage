@@ -11,7 +11,11 @@
 
     <main>
         <div class="file-main">
-            <a class="file-back" href="/folder/<%=file.folderId%>">Back to folder</a>
+            <% if (locals.share) { %>
+                <a class="file-back" href="/share/folder/<%=file.folderId%>">Back to folder</a>
+            <% } else { %>
+                <a class="file-back" href="/folder/<%=file.folderId%>">Back to folder</a>
+            <% } %>
             <div class="file-content">
                 <div class="file-name"><%=file.name%></div>
                 <div class="file-size">Size: <%=file.size%> bytes</div>
