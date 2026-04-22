@@ -740,3 +740,9 @@ form[sent] button[type="submit"] > .loader {
 form[sent] button[type="submit"] > .submit-title {
     display: none;
 }
+
+.error-content {
+    font-size: 1.6rem;
+    color: red;
+    font-weight: 600;
+}

@@ -51,8 +51,12 @@ app.use(express.urlencoded());
 
 app.use("/", router_index);
 
+app.use((req, res) => {
+    res.render("error", { message: "404 - Not found" });
+});
+
 app.use((err, req, res, next) => {
-    console.log(err);
+    console.error(err);
     res.render("error", { message: err });
 });
 
